@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using hackathon_campus.Core.DataAccess;
+using hackathon_campus.Core.Services;
 
 namespace hackathon_campus
 {
@@ -31,6 +32,7 @@ namespace hackathon_campus
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<EventService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

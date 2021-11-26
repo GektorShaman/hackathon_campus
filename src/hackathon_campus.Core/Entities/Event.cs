@@ -17,5 +17,14 @@ namespace hackathon_campus.Core.Entities
         //public string Organizer { get; set; }
 
         public string MeetingPoint { get; set; }
+
+        public Image Image { get; set; }
+
+        public Category Category { get; set; }
+
+        public ICollection<Tag> Tags { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

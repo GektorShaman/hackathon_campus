@@ -12,7 +12,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
     {
         private readonly ApplicationDbContext _context;
 
-        EventRepository(ApplicationDbContext context)
+        public EventRepository(ApplicationDbContext context)
         {
             _context = context;
         }

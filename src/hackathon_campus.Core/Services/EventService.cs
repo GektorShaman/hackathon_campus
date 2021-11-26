@@ -13,7 +13,7 @@ namespace hackathon_campus.Core.Services
     {
         private readonly IEventRepository _eventRepository;
 
-        EventService(IEventRepository eventRepository)
+        public EventService(IEventRepository eventRepository)
         {
             _eventRepository = eventRepository;
         }
