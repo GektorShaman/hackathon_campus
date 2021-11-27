@@ -13,9 +13,12 @@ namespace hackathon_campus.Core.Services
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        private readonly ImageService _imageService;
+
+        public CategoryService(ICategoryRepository categoryRepository,ImageService imageService)
         {
             _categoryRepository = categoryRepository;
+            _imageService = imageService;
         }
 
         public IEnumerable<CategoryViewModel> GetCategories()
@@ -23,20 +26,35 @@ namespace hackathon_campus.Core.Services
             return _categoryRepository.GetAllCategories()
                 .Select(category => new CategoryViewModel
             {
+                Id = category.Id,
                 Name = category.Name,
                 Description = category.Description,
                 //ImagePath = category.Image.Path
             });
         }
 
-        public void CreateCategory(CategoryViewModel categoryViewModel)
+        public CategoryViewModel GetCategoryById(Guid id)
+        {
+            var model = _categoryRepository.GetCategoryById(id);
+            return new CategoryViewModel
+            {
+                Id = model.Id,
+                Description = model.Description,
+                Name = model.Name,
+                ImagePath = model.Image.Path
+            };
+        }
+
+        public void CreateCategory(CreateCategoryViewModel categoryViewModel)
         {
             var model = new Category()
             {
                 Name = categoryViewModel.Name,
-                Description = categoryViewModel.Description
-
-
+                Description = categoryViewModel.Description,
+                Image = new Image
+                {
+                    Path = _imageService.AddImage(categoryViewModel.Image)
+                }
             };
 
             _categoryRepository.CreateCategory(model);

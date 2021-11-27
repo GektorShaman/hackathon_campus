@@ -16,5 +16,18 @@ namespace hackathon_campus.Core.DataAccess
         Task DeleteUser(string id);
 
         Task UpdateUser(ApplicationUser user);
+
+        public void CategorySubscribe(CategorySubscription categorySubscription);
+
+        public void CategoryUnSubscribe(CategorySubscription categorySubscription);
+
+        public bool IsSubscribeOnCategory(string userId, Guid categoryId);
+
+        public void EventSubscribe(EventSubscription eventSubscription);
+
+        public void EventUnSubscribe(EventSubscription eventSubscription);
+
+        public bool IsSubscribeOnEvent(string userId, Guid eventId);
+
     }
 }

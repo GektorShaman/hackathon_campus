@@ -11,10 +11,11 @@ namespace hackathon_campus.Core.DataAccess
     {
         public IEnumerable<Category> GetAllCategories();
 
-        public Category GetCategoryByName(string name);
+        public Category GetCategoryById(Guid id);
 
         public void CreateCategory(Category category);
 
         public void DeleteCategory(string name);
+
     }
 }

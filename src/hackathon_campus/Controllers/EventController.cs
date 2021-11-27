@@ -17,16 +17,21 @@ namespace hackathon_campus.Controllers
 
         private readonly CategoryService _categoryService;
 
-        public EventController(EventService eventService, CategoryService categoryService)
+        private readonly UserService _userService;
+
+        public EventController(EventService eventService, CategoryService categoryService
+            ,UserService userService)
         {
             _eventService = eventService;
             _categoryService = categoryService;
+            _userService = userService;
         }
 
         [HttpGet]
         public IActionResult Details(Guid eventId)
         {
             var eventViewModel = _eventService.GetSinglEvent(eventId);
+            eventViewModel.IsSubscribe = _userService.IsSubscribeOnEvent(eventId);
             return View(eventViewModel);
         }
 
@@ -52,6 +57,19 @@ namespace hackathon_campus.Controllers
             return RedirectToAction("Index","Main");
         }
 
+        [HttpGet]
+        public IActionResult SubscribeOnEvent(Guid eventId)
+        {
+            _userService.SubscribeOnEvent(eventId);
+            return RedirectToAction("Details", eventId);
+        }
+
+        [HttpGet]
+        public IActionResult UnSubscribeOnEvent(Guid eventId)
+        {
+            _userService.UnSubscribeOnEvent(eventId);
+            return RedirectToAction("Details", eventId);
+        }
 
     }
 }

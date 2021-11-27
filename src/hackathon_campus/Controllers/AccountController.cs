@@ -36,13 +36,6 @@ namespace hackathon_campus.Web.Controllers
                 return View(model);
             }
 
-            var sameUser = await _userManager.FindByEmailAsync(model.Email);
-            if (sameUser != null)
-            {
-                ModelState.AddModelError(string.Empty, "Электронная почта уже занята!");
-                return View(model);
-            }
-
             var user = new ApplicationUser
             {
                 Email = model.Email,

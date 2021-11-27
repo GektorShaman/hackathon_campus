@@ -3,6 +3,7 @@ using hackathon_campus.Core.Entities;
 using hackathon_campus.Core.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,14 @@ namespace hackathon_campus.Core.Services
 
         private readonly ICategoryRepository _categoryRepository;
 
-        public EventService(IEventRepository eventRepository,ICategoryRepository categoryRepository)
+        private readonly ImageService _imageService;
+
+        public EventService(IEventRepository eventRepository,ICategoryRepository categoryRepository,
+            ImageService imageService)
         {
             _eventRepository = eventRepository;
             _categoryRepository = categoryRepository;
+            _imageService = imageService;
         }
 
         public void CreateEvent(CreateEventViewModel createEventViewModel)
@@ -31,11 +36,15 @@ namespace hackathon_campus.Core.Services
                 Category = _categoryRepository.GetCategoryByName(createEventViewModel.CategoryName),
                 EventDateStart = createEventViewModel.EventDateStart,
                 EventDateEnd = createEventViewModel.EventDateEnd,
-                ApplicationUserId = createEventViewModel.UserId  
+                ApplicationUserId = createEventViewModel.UserId,
+                Image = new Image
+                {
+                    Path = _imageService.AddImage(createEventViewModel.Image)
+                }
             };
-
             _eventRepository.CreateEvent(model);
         }
+
         public void DeleteEvent(Guid id)
         {
             _eventRepository.DeleteEvent(id);
@@ -72,9 +81,9 @@ namespace hackathon_campus.Core.Services
             };
         }
 
-        public IEnumerable<EventViewModel> GetEventsByCategory(string categoryName,int page)
+        public IEnumerable<EventViewModel> GetEventsByCategory(Guid categoryId,int page)
         {
-            return _eventRepository.GetEventsByCategory(categoryName,page, pageSize: 20)
+            return _eventRepository.GetEventsByCategory(categoryId,page, pageSize: 20)
                 .Select(x => new EventViewModel
             {
                 Id = x.Id,

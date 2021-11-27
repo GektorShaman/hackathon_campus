@@ -73,5 +73,66 @@ namespace hackathon_campus.Core.Services
         {
             await _userRepository.DeleteUser(id);
         }
+
+        public void SubscribeOnCategory(Guid categoryId)
+        {
+            var subscription = new CategorySubscription
+            {
+                ApplicationUserId = GetCurrentUser().Id,
+                CategoryId = categoryId
+            };
+            _userRepository.CategorySubscribe(subscription);
+        }
+
+        public void UnSubscribeOnCategory(Guid categoryId)
+        {
+            var subscription = new CategorySubscription
+            {
+                ApplicationUserId = GetCurrentUser().Id,
+                CategoryId = categoryId
+            };
+            _userRepository.CategoryUnSubscribe(subscription);
+        }
+
+        public bool IsSubscribeOnCategory(Guid categoryId)
+        {
+            var user = GetCurrentUser();
+            if (user != null)
+            {
+                return _userRepository.IsSubscribeOnCategory(user.Id, categoryId);
+            }
+            return false;
+        }
+
+
+        public void SubscribeOnEvent(Guid eventId)
+        {
+            var subscription = new EventSubscription
+            {
+                ApplicationUserId = GetCurrentUser().Id,
+                EventId = eventId
+            };
+            _userRepository.EventSubscribe(subscription);
+        }
+
+        public void UnSubscribeOnEvent(Guid eventId)
+        {
+            var subscription = new EventSubscription
+            {
+                ApplicationUserId = GetCurrentUser().Id,
+                EventId = eventId
+            };
+            _userRepository.EventUnSubscribe(subscription);
+        }
+
+        public bool IsSubscribeOnEvent(Guid eventId)
+        {
+            var user = GetCurrentUser();
+            if (user != null)
+            {
+                return _userRepository.IsSubscribeOnCategory(user.Id, eventId);
+            }
+            return false;
+        }
     }
 }

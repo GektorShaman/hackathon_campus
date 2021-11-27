@@ -27,6 +27,10 @@ namespace hackathon_campus.Infrastructure.DataAccess
 
         public DbSet<Tag> Tags { get; set; }
 
+        public DbSet<CategorySubscription> CategorySubscriptions { get; set; }
+
+        public DbSet<EventSubscription> EventSubscriptions { get; set; } 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -49,8 +53,19 @@ namespace hackathon_campus.Infrastructure.DataAccess
                     Name = "moderator",
                     NormalizedName = "MODERATOR"
                 });
+            modelBuilder.Entity<Category>().HasData(
+                new Category
+                {
+                    Id = new Guid(0x1479a92a, 0x883f, 0x4844, 0xb8, 0x39, 
+                    0xb2, 0x94, 0xb4, 0x91, 0x97, 0xe9),
+                    Name = "IT",
+                    Description = "IT events"
+                });
+
 
             modelBuilder.ApplyConfiguration(new ImageMap());
+            modelBuilder.ApplyConfiguration(new CategorySubscriptionMap());
+            modelBuilder.ApplyConfiguration(new EventSubscriptionMap());
         }
     }
 }

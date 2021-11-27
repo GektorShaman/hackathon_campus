@@ -29,5 +29,7 @@ namespace hackathon_campus.Core.ViewModels
 
         public string ImagePath { get; set; }
 
+        public bool IsSubscribe { get; set; }
+
     }
 }
