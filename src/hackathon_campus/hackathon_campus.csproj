@@ -20,4 +20,8 @@
     <ProjectReference Include="..\hackathon_campus.Infrastructure\hackathon_campus.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\uploaded\" />
+  </ItemGroup>
+
 </Project>

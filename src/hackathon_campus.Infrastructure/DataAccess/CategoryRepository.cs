@@ -38,11 +38,11 @@ namespace hackathon_campus.Infrastructure.DataAccess
                 .ToList();
         }
 
-        public Category GetCategoryByName(string name)
+        public Category GetCategoryById(Guid id)
         {
             return _context.Categories
                 .Include(category => category.Image)
-                .Where(category => category.Name == name)
+                .Where(category => category.Id == id)
                 .FirstOrDefault();
         }
     }

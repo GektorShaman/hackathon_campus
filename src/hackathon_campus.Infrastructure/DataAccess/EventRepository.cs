@@ -44,14 +44,14 @@ namespace hackathon_campus.Infrastructure.DataAccess
                 .OrderBy(@event => @event.EventDateStart);
         }
 
-        public IEnumerable<Event> GetEventsByCategory(string name, int pages, int pageSize)
+        public IEnumerable<Event> GetEventsByCategory(Guid id, int pages, int pageSize)
         {
             return _context.Events
                 .Include(@event => @event.Image)
                 .Include(@event => @event.Category)
                 .Include(@event => @event.ApplicationUser)
                 .Include(@event => @event.Tags)
-                .Where(@event => @event.Category.Name == name)
+                .Where(@event => @event.Category.Id == id)
                 .Skip((pages - 1) * pageSize)
                 .Take(pageSize)
                 .ToList()

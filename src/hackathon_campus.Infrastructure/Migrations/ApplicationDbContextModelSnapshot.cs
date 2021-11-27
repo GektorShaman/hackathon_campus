@@ -138,21 +138,21 @@ namespace hackathon_campus.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "c0008299-541a-4a2d-8fdd-a0be9ba0bf31",
+                            ConcurrencyStamp = "683268b6-8c35-4b86-8006-710810c0f7cc",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "b7949f3a-a33b-4a57-8b7d-826334f92be9",
+                            ConcurrencyStamp = "6f09f1ed-3c01-4452-b580-4a0c649e1ff2",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "783223aa-34df-4dde-ad0c-04444632cb91",
+                            ConcurrencyStamp = "f41bca13-5209-422d-b33d-247a1853d327",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -269,6 +269,27 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1479a92a-883f-4844-b839-b294b49197e9"),
+                            Description = "IT events",
+                            Name = "IT"
+                        });
+                });
+
+            modelBuilder.Entity("hackathon_campus.Core.Entities.CategorySubscription", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ApplicationUserId", "CategoryId");
+
+                    b.ToTable("CategorySubscriptions");
                 });
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Event", b =>
@@ -308,6 +329,19 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("hackathon_campus.Core.Entities.EventSubscription", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ApplicationUserId", "EventId");
+
+                    b.ToTable("EventSubscriptions");
                 });
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Image", b =>

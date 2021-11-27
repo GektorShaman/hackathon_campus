@@ -17,6 +17,18 @@ namespace hackathon_campus.Infrastructure.DataAccess
             _context = context;
         }
 
+        public void CategorySubscribe(CategorySubscription categorySubscription)
+        {
+            _context.CategorySubscriptions.Add(categorySubscription);
+            _context.SaveChanges();
+        }
+
+        public void CategoryUnSubscribe(CategorySubscription categorySubscription)
+        {
+            _context.CategorySubscriptions.Remove(categorySubscription);
+            _context.SaveChanges();
+        }
+
         public async Task DeleteUser(string id)
         {
             var user = GetUserById(id);
@@ -25,6 +37,18 @@ namespace hackathon_campus.Infrastructure.DataAccess
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public void EventSubscribe(EventSubscription eventSubscription)
+        {
+            _context.EventSubscriptions.Add(eventSubscription);
+            _context.SaveChanges();
+        }
+
+        public void EventUnSubscribe(EventSubscription eventSubscription)
+        {
+            _context.EventSubscriptions.Remove(eventSubscription);
+            _context.SaveChanges();
         }
 
         public ApplicationUser GetUserById(string id)
@@ -37,10 +61,22 @@ namespace hackathon_campus.Infrastructure.DataAccess
             return _context.Users.ToList();
         }
 
+        public bool IsSubscribeOnCategory(string userId, Guid categoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsSubscribeOnEvent(string userId, Guid eventId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateUser(ApplicationUser user)
         {
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+
     }
 }
