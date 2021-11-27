@@ -34,8 +34,6 @@ namespace hackathon_campus
                     .AddFluentValidation();
             services.AddHttpContextAccessor();
 
-            services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
-
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -47,8 +45,11 @@ namespace hackathon_campus
             services.AddScoped<EventService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<UserService>();
+            services.AddScoped<MailService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<CategoryService>();
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
