@@ -14,13 +14,19 @@ namespace hackathon_campus.Core.Entities
 
         public string Description { get; set; }
 
-        //public string Organizer { get; set; }
-
         public string MeetingPoint { get; set; }
+
+        public int NumberParticipants { get; set; }
+
+        public DateTime EventDateStart { get; set; }
+
+        public DateTime EventDateEnd { get; set; }
 
         public Image Image { get; set; }
 
         public Category Category { get; set; }
+
+        public Guid CategoryId { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
 

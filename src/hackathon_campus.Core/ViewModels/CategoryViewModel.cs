@@ -4,18 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hackathon_campus.Core.Entities
+namespace hackathon_campus.Core.ViewModels
 {
-    public class Category
+    public class CategoryViewModel
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public Image Image { get; set; }
-
-        public ICollection<Event> Events { get; set; }
+        public string ImagePath { get; set; }
     }
 }

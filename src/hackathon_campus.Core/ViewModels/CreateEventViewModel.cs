@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hackathon_campus.Core.ViewModels
 {
-    public class EventViewModel
+    public class CreateEventViewModel
     {
-        public Guid Id { get; set; }
-
         public string Title { get; set; }
+        public string Description { get; set; }
 
         public string MeetingPoint { get; set; }
 
@@ -18,11 +15,12 @@ namespace hackathon_campus.Core.ViewModels
 
         public DateTime EventDateEnd { get; set; }
 
-        public ICollection<string> Tags { get; set; }
         public string CategoryName { get; set; }
 
-        public string Organizer { get; set; }
+        public ICollection<string> Tags { get; set; }
 
-        public string ImagePath { get; set; }
+        public string UserId { get; set; }
+
+        public IFormFile Image { get; set; }
     }
 }

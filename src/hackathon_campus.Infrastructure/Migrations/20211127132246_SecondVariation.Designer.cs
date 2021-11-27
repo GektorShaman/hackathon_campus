@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using hackathon_campus.Infrastructure.DataAccess;
 
 namespace hackathon_campus.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211127132246_SecondVariation")]
+    partial class SecondVariation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,21 +140,21 @@ namespace hackathon_campus.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "c0008299-541a-4a2d-8fdd-a0be9ba0bf31",
+                            ConcurrencyStamp = "0feb9f6c-b7a6-4293-a5db-90f4af072cda",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "b7949f3a-a33b-4a57-8b7d-826334f92be9",
+                            ConcurrencyStamp = "3c9ce884-7a84-45e2-9255-40b5dbc1f5cd",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "783223aa-34df-4dde-ad0c-04444632cb91",
+                            ConcurrencyStamp = "6cfa547a-6707-44cd-b139-00e2512fb8ae",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -263,10 +265,16 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
@@ -279,9 +287,6 @@ namespace hackathon_campus.Infrastructure.Migrations
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -304,8 +309,6 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Events");
                 });
@@ -427,21 +430,24 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("hackathon_campus.Core.Entities.Category", b =>
+                {
+                    b.HasOne("hackathon_campus.Core.Entities.Event", "Event")
+                        .WithOne("Category")
+                        .HasForeignKey("hackathon_campus.Core.Entities.Category", "EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
             modelBuilder.Entity("hackathon_campus.Core.Entities.Event", b =>
                 {
                     b.HasOne("hackathon_campus.Core.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany("Events")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("hackathon_campus.Core.Entities.Category", "Category")
-                        .WithMany("Events")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ApplicationUser");
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Image", b =>
@@ -496,13 +502,13 @@ namespace hackathon_campus.Infrastructure.Migrations
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Events");
-
                     b.Navigation("Image");
                 });
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Event", b =>
                 {
+                    b.Navigation("Category");
+
                     b.Navigation("Image");
 
                     b.Navigation("Tags");

@@ -10,13 +10,12 @@ namespace hackathon_campus.Core.DataAccess
 {
     public interface IEventRepository
     {
-        void CreateEvent(Event newEvent);
-        void DeleteEvent(Guid id);
+        public void CreateEvent(Event newEvent);
+        public void DeleteEvent(Guid id);
+        public IEnumerable<Event> GetEvents(int pages, int pageSize);
 
-        IEnumerable<Event> GetEvents();
+        public IEnumerable<Event> GetEventsByCategory(string name, int pages, int pageSize);
 
-        IEnumerable<Event> GetEventsByCategory();
-
-        Event GetSinglEvent(Guid id);
+        public Event GetSinglEvent(Guid id);
     }
 }
