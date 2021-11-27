@@ -26,6 +26,8 @@ namespace hackathon_campus.Core.Entities
 
         public Category Category { get; set; }
 
+        public Guid CategoryId { get; set; }
+
         public ICollection<Tag> Tags { get; set; }
 
         public string ApplicationUserId { get; set; }

@@ -13,7 +13,7 @@ namespace hackathon_campus.Core.Services
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -25,7 +25,7 @@ namespace hackathon_campus.Core.Services
             {
                 Name = category.Name,
                 Description = category.Description,
-                ImagePath = category.Image.Path
+                //ImagePath = category.Image.Path
             });
         }
 

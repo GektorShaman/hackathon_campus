@@ -33,6 +33,8 @@ namespace hackathon_campus
                 options.UseSqlServer(connection));
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<EventService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,7 +13,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
     {
         private readonly ApplicationDbContext _context;
 
-        CategoryRepository(ApplicationDbContext context)
+        public CategoryRepository(ApplicationDbContext context)
         {
             _context = context;
         }

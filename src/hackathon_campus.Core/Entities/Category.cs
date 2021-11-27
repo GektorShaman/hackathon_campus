@@ -16,7 +16,6 @@ namespace hackathon_campus.Core.Entities
 
         public Image Image { get; set; }
 
-        public Guid EventId { get; set; }
-        public Event Event { get; set; }
+        public ICollection<Event> Events { get; set; }
     }
 }
