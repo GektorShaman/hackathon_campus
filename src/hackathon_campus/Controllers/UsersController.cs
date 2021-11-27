@@ -68,7 +68,7 @@ namespace hackathon_campus.Web.Controllers
 
         [HttpPost, ActionName("Update")]
         [Authorize(Roles = "moderator")]
-        public async Task<IActionResult> UpdateConfirmed([Bind("Id,FirstName,LastName,NickName,Email")] UserViewModel newUser)
+        public async Task<IActionResult> UpdateConfirmed(UserViewModel newUser)
         {
             if (!User.Identity.IsAuthenticated)
             {

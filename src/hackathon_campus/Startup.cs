@@ -34,7 +34,6 @@ namespace hackathon_campus
                     .AddFluentValidation();
             services.AddHttpContextAccessor();
 
-
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -46,8 +45,10 @@ namespace hackathon_campus
             services.AddScoped<EventService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<UserService>();
+            services.AddScoped<MailService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<CategoryService>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ImageService>();
         }
 
