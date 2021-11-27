@@ -17,6 +17,8 @@ namespace hackathon_campus.Core.ViewModels
 
         public string CategoryName { get; set; }
 
+        public Guid CategoryId { get; set; }
+
         public ICollection<string> Tags { get; set; }
 
         public string UserId { get; set; }

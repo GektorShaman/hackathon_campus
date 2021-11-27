@@ -18,12 +18,15 @@ namespace hackathon_campus.Core.Services
 
         private readonly ImageService _imageService;
 
+        private readonly MailService _mailService;
+
         public EventService(IEventRepository eventRepository,ICategoryRepository categoryRepository,
-            ImageService imageService)
+            ImageService imageService, MailService mailService)
         {
             _eventRepository = eventRepository;
             _categoryRepository = categoryRepository;
             _imageService = imageService;
+            _mailService = mailService;
         }
 
         public void CreateEvent(CreateEventViewModel createEventViewModel)
@@ -33,7 +36,7 @@ namespace hackathon_campus.Core.Services
                 Title = createEventViewModel.Title,
                 Description = createEventViewModel.Description,
                 MeetingPoint = createEventViewModel.MeetingPoint,
-                Category = _categoryRepository.GetCategoryByName(createEventViewModel.CategoryName),
+                Category = _categoryRepository.GetCategoryById(createEventViewModel.CategoryId),
                 EventDateStart = createEventViewModel.EventDateStart,
                 EventDateEnd = createEventViewModel.EventDateEnd,
                 ApplicationUserId = createEventViewModel.UserId,

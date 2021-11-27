@@ -38,7 +38,7 @@ namespace hackathon_campus.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["Category"] = new SelectList(_categoryService.GetCategories(),"Name","Name");
+            ViewData["Category"] = new SelectList(_categoryService.GetCategories(),"Id","Name");
             return View();
         }
 
@@ -49,8 +49,8 @@ namespace hackathon_campus.Controllers
             {
                 return RedirectToAction("Create");
             }
-            
-            //add user service to get userId 
+
+            model.UserId = _userService.GetCurrentUser().Id;
             
             _eventService.CreateEvent(model);
 
