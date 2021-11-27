@@ -1,0 +1,17 @@
+﻿@model IEnumerable<hackathon_campus.Core.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "Users";
+}
+<h1>User List</h1>
+
+    @foreach (var item in Model)
+    {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="card-navbar">
+                        <a asp-controller="Users" asp-action="Details" asp-route-userName="@item.NickName"> @item.FirstName @item.LastName (@item.NickName)</a>
+                    </div>
+                </div>
+            </div>
+    }

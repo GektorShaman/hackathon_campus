@@ -1,0 +1,43 @@
+﻿@model hackathon_campus.Core.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<h1>Login</h1>
+<hr />
+<form asp-action="Login">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="Email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label asp-for="RememberMe">
+                <input asp-for="RememberMe" />
+                Remember Me
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Login" class="btn btn-primary" />
+    </div>
+    <div class="form-group">
+        <p>
+            <a asp-action="Registration">Register as a new user</a>
+        </p>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" asp-controller="Home">To Home Page</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

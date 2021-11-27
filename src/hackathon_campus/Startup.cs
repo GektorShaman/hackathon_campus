@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using hackathon_campus.Core.DataAccess;
 using hackathon_campus.Core.Services;
+using hackathon_campus.Core.Entities;
+using FluentValidation.AspNetCore;
 
 namespace hackathon_campus
 {
@@ -28,11 +30,22 @@ namespace hackathon_campus
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddFluentValidation();
+            services.AddHttpContextAccessor();
+
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<EventService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +66,7 @@ namespace hackathon_campus
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
