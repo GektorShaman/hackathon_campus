@@ -34,6 +34,7 @@ namespace hackathon_campus
                     .AddFluentValidation();
             services.AddHttpContextAccessor();
 
+            services.Configure<MailSettings>(options => Configuration.GetSection("MailSettings").Bind(options));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
