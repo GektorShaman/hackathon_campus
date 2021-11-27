@@ -3,6 +3,7 @@ using hackathon_campus.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace hackathon_campus.Controllers
 {
@@ -22,9 +23,9 @@ namespace hackathon_campus.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult SendMessage(string address, string subject, string message)
+        public async Task<IActionResult> SendMessage(string address, string subject, string message)
         {
-            _mailService.SendEmail(address, subject, message);
+            await _mailService.SendEmail(address, subject, message);
             return RedirectToAction("Index");
         }
 

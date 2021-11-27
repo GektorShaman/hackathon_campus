@@ -2,7 +2,7 @@
 using MimeKit;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
-using System;
+using System.Threading.Tasks;
 
 namespace hackathon_campus.Core.Services
 {
@@ -15,7 +15,7 @@ namespace hackathon_campus.Core.Services
             _mailSettings = mailSettings.Value;
         }
 
-        public void SendEmail(string email, string subject, string message)
+        public async Task SendEmail(string email, string subject, string message)
         {
             var emailMessage = new MimeMessage();
 
@@ -29,10 +29,10 @@ namespace hackathon_campus.Core.Services
 
             using (var client = new SmtpClient())
             {
-                client.Connect(_mailSettings.Host, _mailSettings.Port, true);
-                client.Authenticate(_mailSettings.Address, _mailSettings.Password);
-                client.Send(emailMessage);
-                client.Disconnect(true);
+                await client.ConnectAsync(_mailSettings.Host, _mailSettings.Port, true);
+                await client.AuthenticateAsync(_mailSettings.Address, _mailSettings.Password);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
             }
         }
     }
