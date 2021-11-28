@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace hackathon_campus.Web.Controllers
 {
@@ -63,6 +65,13 @@ namespace hackathon_campus.Web.Controllers
             {
                 return NotFound();
             }
+            var allRoles = _userService.GetAllRoles;
+            var missingRoles = allRoles.Except(user.UserRoles.ToList()).ToList();
+            if (missingRoles.Count() < 2) {
+                missingRoles.Add("user");
+            } 
+            ViewData["Roles"] = new SelectList(missingRoles);
+
             return View(user);
         }
 
@@ -79,7 +88,15 @@ namespace hackathon_campus.Web.Controllers
             {
                 return NotFound();
             }
-            await _userService.UpdateUser(newUser);
+            var user = await _userManager.FindByIdAsync(newUser.Id);
+            foreach (var role in _userService.GetAllRoles)
+            {
+                if(await _userManager.IsInRoleAsync(user, role))
+                    await _userManager.RemoveFromRoleAsync(user, role);
+            }
+            await _userManager.AddToRoleAsync(user, newUser.SelectedRole);
+            if (newUser.SelectedRole != "user")
+                await _userManager.AddToRoleAsync(user, "user");
             return RedirectToAction(nameof(Details), new { userName = newUser.NickName });
         }
 
