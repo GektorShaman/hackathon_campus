@@ -4,14 +4,7 @@
 }
 @model EventDetailsViewModel
 
-<h1>@Model.Title</h1>
-<div class="dropdown">
-    <div class="dropdown-content">
-        <img src="/@Model.ImagePath" alt="Picture" style="max-width: 40vw;">
-    </div>
-</div>
-<p>@Model.Description</p>
-<p>@Model.Organizer</p>
+
 
 @if (!Model.IsSubscribe)
 {
@@ -25,4 +18,22 @@ else
         Вы зарегистрированы
     </a>
 }
+<form style="margin-bottom: 50px;"class="container">
+    
+    <div class="namelabel">
+        <p style="text-align: center;" class="nameMer">@Model.Title</p>
+        <div style="font-size:30px">Описание мероприятия:</div>
+        <div class="nameMer" style="height:290px;">@Model.Description</div>
+    </div>
+    <div class="rightpan">
+    <div class="addImg">
+        <img src="/@Model.ImagePath" alt="" class="merimg">
+    </div>
+    <div type="text"placeholder="Введите место проведения мероприятия"class="date">Место</div>
+    <div type="text" placeholder="Введите время проведения мероприятия"class="date">Время</div>
+    <button class="date" style="background-color:#2185FB; color:white; ">Подать заявку</button>
+        
+    </div>
+    
+</form>
 
