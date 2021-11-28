@@ -1,0 +1,29 @@
+﻿@using hackathon_campus.Core.ViewModels;
+
+@model CategoryEventViewModel
+
+    @if (!Model.IsSubscribe)
+    {
+    <a href="@Url.Action("SubscribeOnCategory", "Category" , new { categoryId=@Model.Id, page = 1 })">
+        Подписаться
+    </a>
+    }
+    else
+    {
+    <a href="@Url.Action("UnSubscribeOnCategory", "Category" , new { categoryId=@Model.Id, page = 1})">
+        Вы подписаны
+    </a>
+    }
+
+
+    @foreach (var eventModel in Model.EventViewModels)
+    {
+    <div class="card mb-2">
+        <div class="card-body">
+            <a href="@Url.Action("Details", "Event" , new { eventId = @eventModel.Id})">
+                <h5 class="card-title">@eventModel.Title</h5>
+            </a>
+            <p class="card-text">@eventModel.Organizer</p>
+        </div>
+    </div>
+    }

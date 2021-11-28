@@ -29,7 +29,7 @@ namespace hackathon_campus.Core.Services
                 Id = category.Id,
                 Name = category.Name,
                 Description = category.Description,
-                //ImagePath = category.Image.Path
+                //ImagePath = category.Image.Image.Path
             });
         }
 
@@ -41,24 +41,28 @@ namespace hackathon_campus.Core.Services
                 Id = model.Id,
                 Description = model.Description,
                 Name = model.Name,
-                ImagePath = model.Image.Path
+                //ImagePath = model.Image.Image.Path
             };
         }
 
-        public void CreateCategory(CreateCategoryViewModel categoryViewModel)
+        public async Task CreateCategory(CreateCategoryViewModel categoryViewModel)
         {
             var model = new Category()
             {
                 Name = categoryViewModel.Name,
                 Description = categoryViewModel.Description,
-                Image = new Image
-                {
-                    Path = _imageService.AddImage(categoryViewModel.Image)
-                }
             };
-
             _categoryRepository.CreateCategory(model);
+            if (categoryViewModel.Image != null)
+            {
+                await _imageService.AddCategoryImage(categoryViewModel.Image, model.Id);
+            }
+            else
+            {
+                await _imageService.AddCategoryDefaultImage(model.Id);
+            }
         }
+
         public void DeleteCategory(string name)
         {
             _categoryRepository.DeleteCategory(name);

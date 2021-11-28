@@ -64,6 +64,8 @@ namespace hackathon_campus.Infrastructure.DataAccess
 
 
             modelBuilder.ApplyConfiguration(new ImageMap());
+            modelBuilder.ApplyConfiguration(new EventImageMap());
+            modelBuilder.ApplyConfiguration(new CategoryImageMap());
             modelBuilder.ApplyConfiguration(new CategorySubscriptionMap());
             modelBuilder.ApplyConfiguration(new EventSubscriptionMap());
         }

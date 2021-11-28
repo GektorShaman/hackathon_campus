@@ -29,5 +29,9 @@ namespace hackathon_campus.Core.DataAccess
 
         public bool IsSubscribeOnEvent(string userId, Guid eventId);
 
+        public IEnumerable<CategorySubscription> GetCategorySubscribers(Guid id);
+
+        public IEnumerable<EventSubscription> GetEventSubscriptionByUser(Guid userId);
+
     }
 }

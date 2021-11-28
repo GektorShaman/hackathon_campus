@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace hackathon_campus.Controllers
 {
-    [Authorize]
     public class MainController : Controller
     {
         private readonly EventService _eventService;
@@ -19,7 +18,7 @@ namespace hackathon_campus.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int page)
+        public IActionResult Index(int page = 1)
         {
             var eventsViewModel = _eventService.GetEvents(page);
             return View(eventsViewModel);

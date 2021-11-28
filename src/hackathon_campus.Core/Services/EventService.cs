@@ -14,7 +14,6 @@ namespace hackathon_campus.Core.Services
     {
         private readonly IEventRepository _eventRepository;
 
-        private readonly ICategoryRepository _categoryRepository;
 
         private readonly ImageService _imageService;
 
@@ -22,14 +21,17 @@ namespace hackathon_campus.Core.Services
 
         private readonly UserService _userService;
 
-        public EventService(IEventRepository eventRepository,ICategoryRepository categoryRepository,
-            ImageService imageService, MailService mailService, UserService userService)
+        private readonly CategoryService _categoryService;
+
+        public EventService(IEventRepository eventRepository,
+            ImageService imageService, MailService mailService, UserService userService
+            ,CategoryService categoryService)
         {
             _eventRepository = eventRepository;
-            _categoryRepository = categoryRepository;
             _imageService = imageService;
             _mailService = mailService;
             _userService = userService;
+            _categoryService = categoryService;
         }
 
         public async Task CreateEvent(CreateEventViewModel createEventViewModel)
@@ -40,18 +42,25 @@ namespace hackathon_campus.Core.Services
                 Title = createEventViewModel.Title,
                 Description = createEventViewModel.Description,
                 MeetingPoint = createEventViewModel.MeetingPoint,
-                Category = _categoryRepository.GetCategoryById(createEventViewModel.CategoryId),
+                CategoryId = createEventViewModel.CategoryId,
                 EventDateStart = createEventViewModel.EventDateStart,
                 EventDateEnd = createEventViewModel.EventDateEnd,
-                ApplicationUserId = user.Id,
-                Image = new Image
-                {
-                    Path = _imageService.AddImage(createEventViewModel.Image)
-                }
+                ApplicationUserId = user.Id
             };
             _eventRepository.CreateEvent(model);
-            await _mailService.SendEmail(user.Email, createEventViewModel.Title, 
-                createEventViewModel.Description);
+            if (createEventViewModel.Image != null)
+            {
+                await _imageService.AddEventImage(createEventViewModel.Image, model.Id);
+            }
+            else
+            {
+                await _imageService.AddEventDefaultImage(model.Id);
+            }
+            foreach (var item in _userService.GetCategorySubscribers(createEventViewModel.CategoryId))
+            {
+                await _mailService.SendEmail(item.Email, createEventViewModel.Title,
+               createEventViewModel.Description);
+            }
         }
 
         public void DeleteEvent(Guid id)
@@ -60,8 +69,8 @@ namespace hackathon_campus.Core.Services
         }
 
         public IEnumerable<EventViewModel> GetEvents(int page)
-        {
-            return _eventRepository.GetEvents(page,pageSize:20).Select(x => new EventViewModel
+        { 
+            return _eventRepository.GetEvents(page, pageSize: 20).Select(x => new EventViewModel
             {
                 Id = x.Id,
                 Title = x.Title,
@@ -70,7 +79,7 @@ namespace hackathon_campus.Core.Services
                 EventDateEnd = x.EventDateEnd,
                 CategoryName = x.Category.Name,
                 Organizer = x.ApplicationUser.FirstName + x.ApplicationUser.LastName,
-                ImagePath = x.Image.Path
+                ImagePath = x.Image.Image.Path
             });
         }
 
@@ -79,14 +88,15 @@ namespace hackathon_campus.Core.Services
             var model = _eventRepository.GetSinglEvent(id);
             return new EventDetailsViewModel
             {
+                Id = model.Id,
                 Title = model.Title,
                 Description = model.Description,
-                MeetingPoint = model.MeetingPoint,
+                //MeetingPoint = model.MeetingPoint,
                 EventDateStart = model.EventDateStart,
                 EventDateEnd = model.EventDateEnd,
                 CategoryName = model.Category.Name,
                 Organizer = model.ApplicationUser.FirstName + model.ApplicationUser.LastName,
-                ImagePath = model.Image.Path
+                ImagePath = model.Image.Image.Path
             };
         }
 
@@ -102,7 +112,7 @@ namespace hackathon_campus.Core.Services
                 EventDateEnd = x.EventDateEnd,
                 CategoryName = x.Category.Name,
                 Organizer = x.ApplicationUser.FirstName + x.ApplicationUser.LastName,
-                ImagePath = x.Image.Path
+                ImagePath = x.Image.Image.Path
             });
         }
     }

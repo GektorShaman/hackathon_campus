@@ -1,0 +1,18 @@
+﻿@using hackathon_campus.Core.ViewModels;
+
+@model IEnumerable<CategoryViewModel>
+
+@if (User.IsInRole("Admin"))
+{
+<a class="nav-link text-dark" asp-controller="Category" asp-action="Create">Создать новую категорию</a>}
+
+@foreach (var category in Model)
+{
+<div class="card mb-2">
+    <div class="card-body">
+        <a href="@Url.Action("Details", "Category", new { categoryId = category.Id, page = 1 })">
+            <h5 class="card-title">@category.Name</h5>
+        </a>
+        <p class="card-text">@category.Description</p>
+    </div>
+</div>}

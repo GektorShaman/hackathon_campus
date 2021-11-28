@@ -1,5 +1,6 @@
 ﻿using hackathon_campus.Core.Services;
 using hackathon_campus.Core.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,22 @@ namespace hackathon_campus.Controllers
                 ImagePath = _categoryService.GetCategoryById(categoryId).ImagePath,
             };
             return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult SubscribeOnCategory(Guid categoryId, int page)
+        {
+            _userService.SubscribeOnCategory(categoryId);
+            return RedirectToAction("Details", new { categoryId = categoryId, page = page });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult UnSubscribeOnCategory(Guid categoryId, int page)
+        {
+            _userService.UnSubscribeOnCategory(categoryId);
+            return RedirectToAction("Details", new { categoryId = categoryId, page = page });
         }
     }
 }

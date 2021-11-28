@@ -1,5 +1,5 @@
 ﻿@using hackathon_campus.Core.ViewModels;
-@model IEnumerable<EventViewModel>
+@model IEnumerable<UserEventViewModel>
 
 @{
     Layout = "_Layout";
@@ -11,7 +11,10 @@
         <div class="card-body">
             <h5 class="card-title">Описание</h5>
             <p class="card-text">@eventModel.Title</p>
-
+            @if (eventModel.IsOwnEvent)
+            {
+                <p class="card-text">Мое мероприятие</p>
+            }
         </div>
         <div class="btnMore"><a href="@Url.Action("Details", "Event",new { eventId = eventModel.Id })"> Подробнее</a></div>
         <div class="btnPodpis">Подписаться</div>

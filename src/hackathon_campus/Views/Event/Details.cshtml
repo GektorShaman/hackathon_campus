@@ -1,15 +1,28 @@
-﻿
+﻿@using hackathon_campus.Core.ViewModels;
 @{
-    Layout = null;
+    Layout = "_Layout";
+}
+@model EventDetailsViewModel
+
+<h1>@Model.Title</h1>
+<div class="dropdown">
+    <div class="dropdown-content">
+        <img src="/@Model.ImagePath" alt="Picture" style="max-width: 40vw;">
+    </div>
+</div>
+<p>@Model.Description</p>
+<p>@Model.Organizer</p>
+
+@if (!Model.IsSubscribe)
+{
+    <a href="@Url.Action("SubscribeOnEvent", "Event", new { eventId = @Model.Id})">
+        Зарегистрироваться
+    </a> 
+}
+else
+{
+    <a href="@Url.Action("UnSubscribeOnEvent", "Event", new { eventId = @Model.Id})">
+        Вы зарегистрированы
+    </a>
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-</body>
-</html>

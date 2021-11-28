@@ -35,6 +35,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         {
             return _context.Categories
                 .Include(category => category.Image)
+                    .ThenInclude(image => image.Image)
                 .ToList();
         }
 
@@ -42,6 +43,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         {
             return _context.Categories
                 .Include(category => category.Image)
+                    .ThenInclude(image => image.Image)
                 .Where(category => category.Id == id)
                 .FirstOrDefault();
         }

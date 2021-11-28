@@ -13,17 +13,20 @@ namespace hackathon_campus.Core.Services
 {
     public class UserService
     {
+        private readonly IEventRepository _eventRepository;
         private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserService(IUserRepository userRepository
                             , UserManager<ApplicationUser> userManager
-                            , IHttpContextAccessor httpContextAccessor)
+                            , IHttpContextAccessor httpContextAccessor
+                            , IEventRepository eventRepository)
         {
             _userRepository = userRepository;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            _eventRepository = eventRepository;
         }
 
         public ApplicationUser GetCurrentUser()
@@ -114,6 +117,7 @@ namespace hackathon_campus.Core.Services
                 EventId = eventId
             };
             _userRepository.EventSubscribe(subscription);
+            _eventRepository.AddParticipant(eventId);
         }
 
         public void UnSubscribeOnEvent(Guid eventId)
@@ -124,6 +128,7 @@ namespace hackathon_campus.Core.Services
                 EventId = eventId
             };
             _userRepository.EventUnSubscribe(subscription);
+            _eventRepository.RemoveParticipant(eventId);
         }
 
         public bool IsSubscribeOnEvent(Guid eventId)
@@ -131,9 +136,50 @@ namespace hackathon_campus.Core.Services
             var user = GetCurrentUser();
             if (user != null)
             {
-                return _userRepository.IsSubscribeOnCategory(user.Id, eventId);
+                
+                return _userRepository.IsSubscribeOnEvent(user.Id, eventId);
             }
             return false;
+        }
+
+        public IEnumerable<ApplicationUser> GetCategorySubscribers(Guid categoryId)
+        {
+            var users = new List<ApplicationUser>();
+            foreach (var item in _userRepository.GetCategorySubscribers(categoryId))
+            {
+                users.Add(_userRepository.GetUserById(item.ApplicationUserId));
+            }
+            return users;
+        }
+
+        public IEnumerable<UserEventViewModel> GetEventSubscriptionByUser(Guid userId)
+        {
+            var eventViewModels = new List<UserEventViewModel>();
+            foreach (var item in _userRepository.GetEventSubscriptionByUser(userId))
+            {
+                var @event = _eventRepository.GetSinglEvent(item.EventId);
+                var eventViewModel = new UserEventViewModel
+                {
+                    Id = @event.Id,
+                    Title = @event.Title,
+                    MeetingPoint = @event.MeetingPoint,
+                    EventDateStart = @event.EventDateStart,
+                    EventDateEnd = @event.EventDateEnd,
+                    CategoryName = @event.Category.Name,
+                    Organizer = @event.ApplicationUser.FirstName + @event.ApplicationUser.LastName,
+                    ImagePath = @event.Image.Image.Path
+                };
+                if (GetCurrentUser().Id == @event.ApplicationUserId)
+                {
+                    eventViewModel.IsOwnEvent = true;
+                }
+                else
+                {
+                    eventViewModel.IsOwnEvent = false;
+                }
+                eventViewModels.Add(eventViewModel);
+            }
+            return eventViewModels;
         }
     }
 }

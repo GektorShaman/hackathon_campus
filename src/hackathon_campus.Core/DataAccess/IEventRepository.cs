@@ -17,5 +17,9 @@ namespace hackathon_campus.Core.DataAccess
         public IEnumerable<Event> GetEventsByCategory(Guid id, int pages, int pageSize);
 
         public Event GetSinglEvent(Guid id);
+
+        public void AddParticipant(Guid id);
+
+        public void RemoveParticipant(Guid id);
     }
 }

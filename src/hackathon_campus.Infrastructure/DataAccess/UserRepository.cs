@@ -53,7 +53,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
 
         public ApplicationUser GetUserById(string id)
         {
-            return _context.Users.FirstOrDefault(a => a.Id == id) ?? throw new ArgumentNullException();
+            return _context.Users.FirstOrDefault(a => a.Id == id);
         }
 
         public IEnumerable<ApplicationUser> GetUsers()
@@ -63,12 +63,14 @@ namespace hackathon_campus.Infrastructure.DataAccess
 
         public bool IsSubscribeOnCategory(string userId, Guid categoryId)
         {
-            throw new NotImplementedException();
+            return _context.CategorySubscriptions.Any(subscription =>
+                subscription.ApplicationUserId == userId && subscription.CategoryId == categoryId);
         }
 
         public bool IsSubscribeOnEvent(string userId, Guid eventId)
         {
-            throw new NotImplementedException();
+            return _context.EventSubscriptions.Any(subscription =>
+                subscription.ApplicationUserId == userId && subscription.EventId == eventId);
         }
 
         public async Task UpdateUser(ApplicationUser user)
@@ -78,5 +80,18 @@ namespace hackathon_campus.Infrastructure.DataAccess
         }
 
 
+        public IEnumerable<CategorySubscription> GetCategorySubscribers(Guid id)
+        {
+            return _context.CategorySubscriptions
+                .Where(subscription => subscription.CategoryId == id)
+                .ToList();
+        }
+
+        public IEnumerable<EventSubscription> GetEventSubscriptionByUser(Guid userId)
+        {
+            return _context.EventSubscriptions
+                .Where(subscription => subscription.ApplicationUserId == userId.ToString())
+                .ToList();
+        }
     }
 }

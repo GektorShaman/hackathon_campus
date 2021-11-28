@@ -35,6 +35,7 @@ namespace hackathon_campus.Controllers
             return View(eventViewModel);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -42,8 +43,9 @@ namespace hackathon_campus.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreateEventViewModel model)
+        public async Task<IActionResult> Create(CreateEventViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -57,18 +59,33 @@ namespace hackathon_campus.Controllers
             return RedirectToAction("Index","Main");
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult UserEvents(Guid userId)
+        {
+            if (userId == Guid.Empty)
+            {
+                userId = Guid.Parse(_userService.GetCurrentUser().Id);
+            }
+            var eventsViewModel = _userService.GetEventSubscriptionByUser(userId);
+            return View(eventsViewModel);
+        }
+
+
+        [Authorize]
         [HttpGet]
         public IActionResult SubscribeOnEvent(Guid eventId)
         {
             _userService.SubscribeOnEvent(eventId);
-            return RedirectToAction("Details", eventId);
+            return RedirectToAction("Details", new { eventId = eventId });
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult UnSubscribeOnEvent(Guid eventId)
         {
             _userService.UnSubscribeOnEvent(eventId);
-            return RedirectToAction("Details", eventId);
+            return RedirectToAction("Details", new { eventId = eventId });
         }
 
     }

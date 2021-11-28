@@ -20,12 +20,6 @@ namespace hackathon_campus.Infrastructure.DataAccess.Mapping
             builder.Property(x => x.Path)
                 .IsRequired();
 
-            builder.HasOne(x => x.ApplicationUser)
-                .WithOne(x => x.Avatar);
-            builder.HasOne(x => x.Category)
-                .WithOne(x => x.Image);
-            builder.HasOne(x => x.Event)
-                .WithOne(x => x.Image);
         }
 
 

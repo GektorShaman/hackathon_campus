@@ -11,7 +11,7 @@ namespace hackathon_campus.Core.Entities
 
         public ICollection<Event> Events { get; set; }
 
-        public Image Avatar { get; set; }
+        //public Image Avatar { get; set; }
 
         public ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
     }

@@ -18,6 +18,14 @@ namespace hackathon_campus.Infrastructure.DataAccess
             _context = context;
         }
 
+        public void AddParticipant(Guid id)
+        {
+            var @event = GetSinglEvent(id);
+            @event.NumberParticipants += 1;
+            _context.Update(@event);
+            _context.SaveChanges();
+        }
+
         public void CreateEvent(Event newEvent)
         {
             _context.Add(newEvent);
@@ -35,6 +43,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         {
             return _context.Events
                 .Include(@event => @event.Image)
+                    .ThenInclude(image => image.Image)
                 .Include(@event => @event.Category)
                 .Include(@event => @event.ApplicationUser)
                 .Include(@event => @event.Tags)
@@ -48,6 +57,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         {
             return _context.Events
                 .Include(@event => @event.Image)
+                    .ThenInclude(image => image.Image)
                 .Include(@event => @event.Category)
                 .Include(@event => @event.ApplicationUser)
                 .Include(@event => @event.Tags)
@@ -62,10 +72,19 @@ namespace hackathon_campus.Infrastructure.DataAccess
         {
             return _context.Events
                 .Include(@event => @event.Image)
+                    .ThenInclude(image => image.Image)
                 .Include(@event => @event.Category)
                 .Include(@event => @event.ApplicationUser)
                 .Include(@event => @event.Tags)
                 .FirstOrDefault(@event => @event.Id == id);
+        }
+
+        public void RemoveParticipant(Guid id)
+        {
+            var @event = GetSinglEvent(id);
+            @event.NumberParticipants -= 1;
+            _context.Update(@event);
+            _context.SaveChanges();
         }
     }
 }

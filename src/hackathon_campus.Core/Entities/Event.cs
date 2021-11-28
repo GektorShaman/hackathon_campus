@@ -22,7 +22,7 @@ namespace hackathon_campus.Core.Entities
 
         public DateTime EventDateEnd { get; set; }
 
-        public Image Image { get; set; }
+        public EventImage Image { get; set; }
 
         public Category Category { get; set; }
 

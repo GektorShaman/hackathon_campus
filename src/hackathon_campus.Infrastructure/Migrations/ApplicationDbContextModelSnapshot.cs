@@ -138,21 +138,21 @@ namespace hackathon_campus.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "683268b6-8c35-4b86-8006-710810c0f7cc",
+                            ConcurrencyStamp = "401645e4-3702-4e3e-b35f-02c2f018a039",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "6f09f1ed-3c01-4452-b580-4a0c649e1ff2",
+                            ConcurrencyStamp = "8b3f9ee8-bfe2-4876-bf3f-e8961f921591",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "f41bca13-5209-422d-b33d-247a1853d327",
+                            ConcurrencyStamp = "dcff1237-5795-41c0-ae0e-33b5ac99dc55",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -279,6 +279,22 @@ namespace hackathon_campus.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("hackathon_campus.Core.Entities.CategoryImage", b =>
+                {
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
+
+                    b.ToTable("CategoryImage");
+                });
+
             modelBuilder.Entity("hackathon_campus.Core.Entities.CategorySubscription", b =>
                 {
                     b.Property<string>("ApplicationUserId")
@@ -331,6 +347,22 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("hackathon_campus.Core.Entities.EventImage", b =>
+                {
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("EventId")
+                        .IsUnique();
+
+                    b.ToTable("EventImage");
+                });
+
             modelBuilder.Entity("hackathon_campus.Core.Entities.EventSubscription", b =>
                 {
                     b.Property<string>("ApplicationUserId")
@@ -346,18 +378,8 @@ namespace hackathon_campus.Infrastructure.Migrations
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Path")
@@ -365,16 +387,6 @@ namespace hackathon_campus.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId")
-                        .IsUnique()
-                        .HasFilter("[ApplicationUserId] IS NOT NULL");
-
-                    b.HasIndex("CategoryId")
-                        .IsUnique();
-
-                    b.HasIndex("EventId")
-                        .IsUnique();
 
                     b.ToTable("Images");
                 });
@@ -461,6 +473,25 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("hackathon_campus.Core.Entities.CategoryImage", b =>
+                {
+                    b.HasOne("hackathon_campus.Core.Entities.Category", "Category")
+                        .WithOne("Image")
+                        .HasForeignKey("hackathon_campus.Core.Entities.CategoryImage", "CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("hackathon_campus.Core.Entities.Image", "Image")
+                        .WithMany("CategoryImages")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("hackathon_campus.Core.Entities.Event", b =>
                 {
                     b.HasOne("hackathon_campus.Core.Entities.ApplicationUser", "ApplicationUser")
@@ -478,29 +509,23 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("hackathon_campus.Core.Entities.Image", b =>
+            modelBuilder.Entity("hackathon_campus.Core.Entities.EventImage", b =>
                 {
-                    b.HasOne("hackathon_campus.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithOne("Avatar")
-                        .HasForeignKey("hackathon_campus.Core.Entities.Image", "ApplicationUserId");
-
-                    b.HasOne("hackathon_campus.Core.Entities.Category", "Category")
-                        .WithOne("Image")
-                        .HasForeignKey("hackathon_campus.Core.Entities.Image", "CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("hackathon_campus.Core.Entities.Event", "Event")
                         .WithOne("Image")
-                        .HasForeignKey("hackathon_campus.Core.Entities.Image", "EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("hackathon_campus.Core.Entities.EventImage", "EventId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Category");
+                    b.HasOne("hackathon_campus.Core.Entities.Image", "Image")
+                        .WithMany("EventImages")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Event");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("hackathon_campus.Core.Entities.Tag", b =>
@@ -523,8 +548,6 @@ namespace hackathon_campus.Infrastructure.Migrations
                 {
                     b.Navigation("ApplicationUserRoles");
 
-                    b.Navigation("Avatar");
-
                     b.Navigation("Events");
                 });
 
@@ -540,6 +563,13 @@ namespace hackathon_campus.Infrastructure.Migrations
                     b.Navigation("Image");
 
                     b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("hackathon_campus.Core.Entities.Image", b =>
+                {
+                    b.Navigation("CategoryImages");
+
+                    b.Navigation("EventImages");
                 });
 #pragma warning restore 612, 618
         }

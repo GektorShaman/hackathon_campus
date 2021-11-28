@@ -3,6 +3,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace hackathon_campus.Core.Services
 {
@@ -10,9 +11,12 @@ namespace hackathon_campus.Core.Services
     {
         private readonly MailSettings _mailSettings;
 
-        public MailService(IOptions<MailSettings> mailSettings)
+        private readonly IHttpClientFactory _clientFactory;
+
+        public MailService(IOptions<MailSettings> mailSettings, IHttpClientFactory clientFactory)
         {
             _mailSettings = mailSettings.Value;
+            _clientFactory = clientFactory;
         }
 
         public async Task SendEmail(string email, string subject, string message)
@@ -34,6 +38,12 @@ namespace hackathon_campus.Core.Services
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
+        }
+
+        public async Task AskTelegramBot(string email, string message)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "https://api.telegram.org/2144370865:AAEoJfPQL8wSmbZdMM22vNGI_FclHu80zHI/getUpdates");
         }
     }
 }

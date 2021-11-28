@@ -49,7 +49,9 @@ namespace hackathon_campus
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<CategoryService>();
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ImageService>();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +79,7 @@ namespace hackathon_campus
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Main}/{action=Index}/{id?}");
             });
         }
     }

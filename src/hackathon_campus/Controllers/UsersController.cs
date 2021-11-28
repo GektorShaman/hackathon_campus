@@ -11,7 +11,7 @@ namespace hackathon_campus.Web.Controllers
     public class UsersController : Controller
     {
         private readonly UserService _userService;
-        private UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public UsersController(UserService userService,
             UserManager<ApplicationUser> userManager)
