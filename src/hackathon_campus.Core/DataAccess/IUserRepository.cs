@@ -17,6 +17,8 @@ namespace hackathon_campus.Core.DataAccess
 
         Task UpdateUser(ApplicationUser user);
 
+        public ICollection<String> GetAllRoles();
+
         public void CategorySubscribe(CategorySubscription categorySubscription);
 
         public void CategoryUnSubscribe(CategorySubscription categorySubscription);

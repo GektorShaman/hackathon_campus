@@ -32,6 +32,8 @@ namespace hackathon_campus.Core.Services
             _mailService = mailService;
         }
 
+        public ICollection<string> GetAllRoles => _userRepository.GetAllRoles();
+
         public ApplicationUser GetCurrentUser()
         {
             var thisUser = _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User).Result;
@@ -41,13 +43,15 @@ namespace hackathon_campus.Core.Services
         public UserViewModel GetUserById(string id)
         {
             var user = _userRepository.GetUserById(id);
+            var roles = _userManager.GetRolesAsync(user).Result;
             return new UserViewModel
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName =  user.LastName,
                 NickName = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                UserRoles = roles
             };
         }
 
