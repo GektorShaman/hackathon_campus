@@ -12,17 +12,26 @@
 </div>
 <p>@Model.Description</p>
 <p>@Model.Organizer</p>
+<p>@Model.EventDateStart</p>
 
-@if (!Model.IsSubscribe)
+@if (!Model.isOwn)
 {
-    <a href="@Url.Action("SubscribeOnEvent", "Event", new { eventId = @Model.Id})">
-        Зарегистрироваться
-    </a> 
+    @if (!Model.IsSubscribe)
+    {
+        <a href="@Url.Action("SubscribeOnEvent", "Event", new { eventId = @Model.Id })">
+            Зарегистрироваться
+        </a>
+    }
+    else
+    {
+        <a href="@Url.Action("UnSubscribeOnEvent", "Event", new { eventId = @Model.Id })">
+            Вы зарегистрированы
+        </a>
+    }
 }
 else
 {
-    <a href="@Url.Action("UnSubscribeOnEvent", "Event", new { eventId = @Model.Id})">
-        Вы зарегистрированы
-    </a>
+    <p> Ваше мероприятие. Количество участников:</p>
+    <p> @Model.NumberParticipants</p>
 }
 

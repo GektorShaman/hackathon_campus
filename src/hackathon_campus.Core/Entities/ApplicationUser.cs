@@ -14,5 +14,9 @@ namespace hackathon_campus.Core.Entities
         //public Image Avatar { get; set; }
 
         public ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
+
+        public string TelegramFirstName { get; set; }
+
+        public string TelegramGroupId { get; set; }
     }
 }

@@ -86,7 +86,7 @@ namespace hackathon_campus.Core.Services
         public EventDetailsViewModel GetSinglEvent(Guid id)
         {
             var model = _eventRepository.GetSinglEvent(id);
-            return new EventDetailsViewModel
+            var eventDetailViewModel = new EventDetailsViewModel
             {
                 Id = model.Id,
                 Title = model.Title,
@@ -96,8 +96,18 @@ namespace hackathon_campus.Core.Services
                 EventDateEnd = model.EventDateEnd,
                 CategoryName = model.Category.Name,
                 Organizer = model.ApplicationUser.FirstName + model.ApplicationUser.LastName,
-                ImagePath = model.Image.Image.Path
+                ImagePath = model.Image.Image.Path,
+                NumberParticipants = model.NumberParticipants
             };
+            if (model.ApplicationUserId == _userService.GetCurrentUser().Id)
+            {
+                eventDetailViewModel.isOwn = true;
+            }
+            else
+            {
+                eventDetailViewModel.isOwn = false;
+            }
+            return eventDetailViewModel;
         }
 
         public IEnumerable<EventViewModel> GetEventsByCategory(Guid categoryId,int page)

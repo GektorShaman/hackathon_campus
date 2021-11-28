@@ -66,6 +66,16 @@ namespace hackathon_campus.Web.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddInformationForBot(string telegramFirstName)
+        {
+            _userService.AddTelegramIngormation(telegramFirstName);
+            return RedirectToAction("Login", "Account");
+        }
+
+
+
         [HttpPost, ActionName("Update")]
         [Authorize(Roles = "moderator")]
         public async Task<IActionResult> UpdateConfirmed(UserViewModel newUser)
