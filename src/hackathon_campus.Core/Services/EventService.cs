@@ -20,17 +20,21 @@ namespace hackathon_campus.Core.Services
 
         private readonly MailService _mailService;
 
+        private readonly UserService _userService;
+
         public EventService(IEventRepository eventRepository,ICategoryRepository categoryRepository,
-            ImageService imageService, MailService mailService)
+            ImageService imageService, MailService mailService, UserService userService)
         {
             _eventRepository = eventRepository;
             _categoryRepository = categoryRepository;
             _imageService = imageService;
             _mailService = mailService;
+            _userService = userService;
         }
 
-        public void CreateEvent(CreateEventViewModel createEventViewModel)
+        public async Task CreateEvent(CreateEventViewModel createEventViewModel)
         {
+            var user = _userService.GetCurrentUser();
             var model = new Event()
             {
                 Title = createEventViewModel.Title,
@@ -39,13 +43,15 @@ namespace hackathon_campus.Core.Services
                 Category = _categoryRepository.GetCategoryById(createEventViewModel.CategoryId),
                 EventDateStart = createEventViewModel.EventDateStart,
                 EventDateEnd = createEventViewModel.EventDateEnd,
-                ApplicationUserId = createEventViewModel.UserId,
+                ApplicationUserId = user.Id,
                 Image = new Image
                 {
                     Path = _imageService.AddImage(createEventViewModel.Image)
                 }
             };
             _eventRepository.CreateEvent(model);
+            await _mailService.SendEmail(user.Email, createEventViewModel.Title, 
+                createEventViewModel.Description);
         }
 
         public void DeleteEvent(Guid id)
