@@ -39,16 +39,5 @@ namespace hackathon_campus.Core.Services
                 await client.DisconnectAsync(true);
             }
         }
-
-        public async Task AskTelegramBot(string email, string message)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-                "https://api.telegram.org/2144370865:AAEoJfPQL8wSmbZdMM22vNGI_FclHu80zHI/getUpdates");
-
-            var client = _clientFactory.CreateClient();
-            var response = await client.SendAsync(request);
-
-
-        }
     }
 }

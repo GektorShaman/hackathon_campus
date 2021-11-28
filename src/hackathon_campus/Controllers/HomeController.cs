@@ -22,13 +22,7 @@ namespace hackathon_campus.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> SendMessage(string address, string subject, string message)
-        {
-            await _mailService.SendEmail(address, subject, message);
-            return RedirectToAction("Index");
-        }
-
+        
         public IActionResult Privacy()
         {
             return View();
