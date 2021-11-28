@@ -2,10 +2,11 @@
 
 @model IEnumerable<CategoryViewModel>
 
-@if (User.IsInRole("Admin"))
+@if (User.IsInRole("user"))
 {
-<a class="nav-link text-dark" asp-controller="Category" asp-action="Create">Создать новую категорию</a>}
 
+<a asp-controller="Category" asp-action="Create" class="date" style="background-color:#2185FB; color:white; padding-top:12px; text-align: center; ">Подать заявку</a>}
+<div class="cotegorylist">
 @foreach (var category in Model)
 {
 <div class="card mb-2">
@@ -16,4 +17,13 @@
         <p class="card-text">@category.Description</p>
         <p>@category.NumberParticipants</p>
     </div>
-</div>}
+
+</div>
+<div class="cotegoryel">
+            <a class="cotname"href="#">Name</a>
+            <p class="opis">Opiafasfasfafasfa asf  assa</p>
+            <label>1234</label>
+</div> 
+
+}
+</div>

@@ -6,9 +6,8 @@
     var categories = ViewData["Category"] as SelectList;
 }
 
-<div class="container">
 
-    <form asp-action="Create" enctype="multipart/form-data">
+    <form  class="container" asp-action="Create" enctype="multipart/form-data">
         <div class="namelabel">
             <textarea class="nameMer" asp-for="Title" placeholder="Введите название мероприятия"></textarea>
             <div class="form-group">
@@ -30,4 +29,3 @@
 
         </div>
     </form>
-</div>
