@@ -60,5 +60,26 @@ namespace hackathon_campus.Controllers
             _userService.UnSubscribeOnCategory(categoryId);
             return RedirectToAction("Details", new { categoryId = categoryId, page = page });
         }
+        
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateCategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Create");
+            }
+
+
+            await _categoryService.CreateCategory(model);
+
+            return RedirectToAction("Index", "Main");
+        }
     }
 }

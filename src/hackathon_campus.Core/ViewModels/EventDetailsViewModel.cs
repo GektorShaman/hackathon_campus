@@ -31,5 +31,9 @@ namespace hackathon_campus.Core.ViewModels
 
         public bool IsSubscribe { get; set; }
 
+        public bool isOwn { get; set; }
+
+        public int NumberParticipants { get; set; }
+
     }
 }

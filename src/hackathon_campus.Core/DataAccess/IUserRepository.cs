@@ -33,5 +33,7 @@ namespace hackathon_campus.Core.DataAccess
 
         public IEnumerable<EventSubscription> GetEventSubscriptionByUser(Guid userId);
 
+        public void AddTelegramInformation(ApplicationUser user);
+
     }
 }

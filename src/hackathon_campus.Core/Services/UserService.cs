@@ -17,16 +17,19 @@ namespace hackathon_campus.Core.Services
         private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly MailService _mailService;
 
         public UserService(IUserRepository userRepository
                             , UserManager<ApplicationUser> userManager
                             , IHttpContextAccessor httpContextAccessor
-                            , IEventRepository eventRepository)
+                            , IEventRepository eventRepository
+                            , MailService mailService)
         {
             _userRepository = userRepository;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _eventRepository = eventRepository;
+            _mailService = mailService;
         }
 
         public ApplicationUser GetCurrentUser()
@@ -72,6 +75,13 @@ namespace hackathon_campus.Core.Services
             await _userRepository.UpdateUser(user);
         }
 
+        public void AddTelegramIngormation(string telegramFirstName)
+        {
+            var user = GetCurrentUser();
+            user.TelegramFirstName = telegramFirstName;
+            _userRepository.AddTelegramInformation(user);
+        }
+
         public async Task DeleteUser(string id)
         {
             await _userRepository.DeleteUser(id);
@@ -108,7 +118,7 @@ namespace hackathon_campus.Core.Services
         }
 
 
-        public void SubscribeOnEvent(Guid eventId)
+        public async Task SubscribeOnEvent(Guid eventId)
         {
             var user = GetCurrentUser();
             var subscription = new EventSubscription
@@ -116,7 +126,10 @@ namespace hackathon_campus.Core.Services
                 ApplicationUserId = GetCurrentUser().Id,
                 EventId = eventId
             };
+            var model = _eventRepository.GetSinglEvent(eventId);
             _userRepository.EventSubscribe(subscription);
+            await _mailService.SendEmail(user.Email, model.Title,
+              model.Description);
             _eventRepository.AddParticipant(eventId);
         }
 
