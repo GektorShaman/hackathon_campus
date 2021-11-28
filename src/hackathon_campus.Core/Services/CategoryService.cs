@@ -23,14 +23,25 @@ namespace hackathon_campus.Core.Services
 
         public IEnumerable<CategoryViewModel> GetCategories()
         {
-            return _categoryRepository.GetAllCategories()
-                .Select(category => new CategoryViewModel
+
+            var models = _categoryRepository.GetAllCategories();
+            var categoryViewModel = new List<CategoryViewModel>();
+            foreach (var item in models)
             {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                //ImagePath = category.Image.Image.Path
-            });
+                var model = new CategoryViewModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    //ImagePath = category.Image.Image.Path
+                };
+                foreach (var innerItem in item.Events)
+                {
+                    model.NumberParticipants += innerItem.NumberParticipants;
+                }
+                categoryViewModel.Add(model);
+            }
+            return categoryViewModel;
         }
 
         public CategoryViewModel GetCategoryById(Guid id)

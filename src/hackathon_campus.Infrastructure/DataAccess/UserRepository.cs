@@ -93,5 +93,11 @@ namespace hackathon_campus.Infrastructure.DataAccess
                 .Where(subscription => subscription.ApplicationUserId == userId.ToString())
                 .ToList();
         }
+
+        public void AddTelegramInformation(ApplicationUser user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

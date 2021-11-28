@@ -34,6 +34,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         public IEnumerable<Category> GetAllCategories()
         {
             return _context.Categories
+                .Include(category => category.Events)
                 .Include(category => category.Image)
                     .ThenInclude(image => image.Image)
                 .ToList();

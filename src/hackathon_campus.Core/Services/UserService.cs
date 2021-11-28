@@ -72,6 +72,13 @@ namespace hackathon_campus.Core.Services
             await _userRepository.UpdateUser(user);
         }
 
+        public void AddTelegramIngormation(string telegramFirstName)
+        {
+            var user = GetCurrentUser();
+            user.TelegramFirstName = telegramFirstName;
+            _userRepository.AddTelegramInformation(user);
+        }
+
         public async Task DeleteUser(string id)
         {
             await _userRepository.DeleteUser(id);
