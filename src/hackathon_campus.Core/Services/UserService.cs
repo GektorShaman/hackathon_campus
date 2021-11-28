@@ -107,6 +107,7 @@ namespace hackathon_campus.Core.Services
 
         public void SubscribeOnEvent(Guid eventId)
         {
+            var user = GetCurrentUser();
             var subscription = new EventSubscription
             {
                 ApplicationUserId = GetCurrentUser().Id,

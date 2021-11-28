@@ -43,7 +43,7 @@ namespace hackathon_campus.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateEventViewModel model)
+        public async Task<IActionResult> CreateAsync(CreateEventViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace hackathon_campus.Controllers
 
             model.UserId = _userService.GetCurrentUser().Id;
             
-            _eventService.CreateEvent(model);
+            await _eventService.CreateEvent(model);
 
             return RedirectToAction("Index","Main");
         }
