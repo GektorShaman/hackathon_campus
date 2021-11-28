@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace hackathon_campus.Infrastructure.Migrations
 {
-    public partial class new_init : Migration
+    public partial class hh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -316,9 +316,9 @@ namespace hackathon_campus.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", "401645e4-3702-4e3e-b35f-02c2f018a039", "admin", "ADMIN" },
-                    { "2", "8b3f9ee8-bfe2-4876-bf3f-e8961f921591", "user", "USER" },
-                    { "3", "dcff1237-5795-41c0-ae0e-33b5ac99dc55", "moderator", "MODERATOR" }
+                    { "1", "940d4b60-aab9-469c-b393-45bcce60b4a8", "admin", "ADMIN" },
+                    { "2", "d00b3c8f-547b-44fd-ad31-b421861cbc68", "user", "USER" },
+                    { "3", "4cf015af-25d9-4e3b-abff-e1f67eba469d", "moderator", "MODERATOR" }
                 });
 
             migrationBuilder.InsertData(
