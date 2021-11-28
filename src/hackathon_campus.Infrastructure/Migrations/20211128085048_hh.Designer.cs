@@ -10,8 +10,8 @@ using hackathon_campus.Infrastructure.DataAccess;
 namespace hackathon_campus.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211128021607_new_init")]
-    partial class new_init
+    [Migration("20211128085048_hh")]
+    partial class hh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,21 +140,21 @@ namespace hackathon_campus.Infrastructure.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "401645e4-3702-4e3e-b35f-02c2f018a039",
+                            ConcurrencyStamp = "940d4b60-aab9-469c-b393-45bcce60b4a8",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "8b3f9ee8-bfe2-4876-bf3f-e8961f921591",
+                            ConcurrencyStamp = "d00b3c8f-547b-44fd-ad31-b421861cbc68",
                             Name = "user",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "dcff1237-5795-41c0-ae0e-33b5ac99dc55",
+                            ConcurrencyStamp = "4cf015af-25d9-4e3b-abff-e1f67eba469d",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
