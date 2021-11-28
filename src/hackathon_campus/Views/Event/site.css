@@ -274,3 +274,17 @@ body {
   margin-left:20px;
   margin-top:20px;
 }
+/*-----------------------------------------categorylist------------------------*/
+.cotegorylist
+{
+  width: 1400px;
+  height: 100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.cotegoryel
+{
+  width: 200px;
+  height: 100px;
+}

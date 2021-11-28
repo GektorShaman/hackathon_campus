@@ -274,3 +274,30 @@ body {
   margin-left:20px;
   margin-top:20px;
 }
+/*-----------------------------------------categorylist------------------------*/
+.cotegorylist
+{
+  width: 1400px;
+  height: 100px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.cotegoryel
+{
+  width: 200px;
+  height: 100px;
+  border:1px solid;
+  text-align:center;
+  margin-left: 10px;
+  margin-top:20px;
+}
+label
+{
+
+}
+.opis
+{
+
+}
