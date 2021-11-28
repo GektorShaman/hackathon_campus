@@ -13,14 +13,22 @@
 <body>
     <div id="whitepolos">
         <div id="navbar">
-            <div class ="leftEl" ><a href="#"id = "firstel">МИИГAиК</a></div>
-            <div class ="leftEl lastlefel" ><a asp-controller="Main" asp-action="Index" id = "secel">Мероприятия</a></div>
-            <div class ="rightEl"><a asp-controller="Main" asp-action="Index" class ="active"id = "arrow">Главная</a></div>
-            <div class ="rightEl"><a asp-controller="Category" asp-action="Index" id = "arrow">Категории</a></div>
-            <div class ="rightEl"><a asp-controller="Event" asp-action="UserEvents" id = "arrow">Мои мероприятия</a></div>
-            <div class ="rightEl"><a asp-controller="Event" asp-action="Create" id = "arrow">Создать мероприятия</a></div>
-            <img class = "circleImg" id = "userImg"src="Avatar.png" alt="">
-            <div id = "arrow"><a asp-controller="Account" asp-action="Login" id = "arrow">Войти</a></div>
+            <div class="leftEl"><a href="#" id="firstel">МИИГAиК</a></div>
+            <div class="leftEl lastlefel"><a asp-controller="Main" asp-action="Index" id="secel">Мероприятия</a></div>
+            <div class="rightEl"><a asp-controller="Main" asp-action="Index" class="active" id="arrow">Главная</a></div>
+            <div class="rightEl"><a asp-controller="Category" asp-action="Index" id="arrow">Категории</a></div>
+            <div class="rightEl"><a asp-controller="Event" asp-action="UserEvents" id="arrow">Мои мероприятия</a></div>
+            <div class="rightEl"><a asp-controller="Event" asp-action="Create" id="arrow">Создать мероприятия</a></div>
+            <img class="circleImg" id="userImg" src="Avatar.png" alt="">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div id="arrow"><a asp-controller="Account" asp-action="Logout" id="arrow">Выйти</a></div>
+            }
+            else
+            {
+                <div id="arrow"><a asp-controller="Account" asp-action="Login" id="arrow">Войти</a></div>
+            }
+            
         </div>
     </div>
     <div class="boby">

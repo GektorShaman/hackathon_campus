@@ -7,25 +7,26 @@
 }
 
 
-    <form  class="container" asp-action="Create" enctype="multipart/form-data">
-        <div class="namelabel">
-            <textarea class="nameMer" asp-for="Title" placeholder="Введите название мероприятия"></textarea>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control"
-                        asp-items="@categories">
-                </select>
-            </div>
-            <div style="font-size:30px">Описание мероприятия:</div>
-            <textarea class="nameMer" asp-for="Description" placeholder="пример описания мероприятия" style="height:290px;"></textarea>
+<form class="container" asp-action="Create" enctype="multipart/form-data">
+    <div class="namelabel">
+        <textarea class="nameMer" asp-for="Title" placeholder="Введите название мероприятия"></textarea>
+        <div class="form-group">
+            <label asp-for="CategoryId" class="control-label"></label>
+            <select asp-for="CategoryId" class="form-control"
+                    asp-items="@categories">
+            </select>
         </div>
-        <div class="rightpan">
-            <div class="addImg">
-                <input class="imgbtn" type="file" asp-for="Image" />
-            </div>
+        <div style="font-size:30px">Описание мероприятия:</div>
+        <textarea class="nameMer" asp-for="Description" placeholder="пример описания мероприятия" style="height:290px;"></textarea>
+    </div>
+    
+    <div class="rightpan">
+        <div class="addImg">
+            <input class="imgbtn" type="file" asp-for="Image" />
+        </div>
             <input type="text" asp-for="MeetingPoint" placeholder="Введите место проведения мероприятия" class="date">
             <input type="datetime" asp-for="EventDateStart" placeholder="Введите время проведения мероприятия" class="date">
-            <button type ="submit" class="date" value="Create" style="background-color:#2185FB; color:white; ">Подать заявку</button>
+            <button type="submit" class="date" value="Create" style="background-color:#2185FB; color:white; ">Подать заявку</button>
 
         </div>
-    </form>
+</form>

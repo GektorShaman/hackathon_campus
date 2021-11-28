@@ -16,36 +16,6 @@
     }
 </head>
 <body>
-    <h1>Login</h1>
-    <hr />
-    <form asp-action="Login">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <input asp-for="Email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input asp-for="Password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <div class="checkbox">
-                <label asp-for="RememberMe">
-                    <input asp-for="RememberMe" />
-                    Remember Me
-                </label>
-            </div>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Login" class="btn btn-primary" />
-        </div>
-        <div class="form-group">
-            <p>
-                <a asp-action="Registration" asp-controller="Account">Register as a new user</a>
-            </p>
-        </div>
-    </form>
-
     <div>
         <a asp-action="Index" asp-controller="Main">To Home Page</a>
     </div>
@@ -53,29 +23,29 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Вход</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input maxlength="25" class="login" size="40" name="login" placeholder="Логин"></p>
-          <input type="password" class="password" maxlength="25" size="40" name="password" placeholder="Пароль"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Войти</button>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Запомнить меня
-            </label>
-          </div>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Зарегистрироваться</button>
-        </div>
-      </div>
-    </div>
+    <form asp-action="Login" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Вход</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="Email" type="text" maxlength="25" class="login" size="40" name="login" placeholder="Логин"></p>
+                    <input asp-for="Password" type="password" class="form-control" class="password" maxlength="25" size="40" name="password" placeholder="Пароль"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" value="Login" class="btn btn-primary">Войти</button>
+                    <div class="form-check">
+                        <input class="form-check-input" asp-for="RememberMe" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" asp-for="RememberMe" for="flexCheckDefault">
+                            Запомнить меня
+                        </label>
+                    </div>
+                    <a asp-controller="Account" asp-action="Registration" class="btn btn-secondary">Зарегистрироваться</a>
+                </div>
+            </div>
+ 
+    </form>
 </body>
 </html>
 

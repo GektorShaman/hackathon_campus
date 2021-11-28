@@ -51,8 +51,6 @@ namespace hackathon_campus.Infrastructure.DataAccess
             _context.SaveChanges();
         }
 
-        public ICollection<string> GetAllRoles() => _context.Roles.Select(r => r.Name).ToList();
-
         public ApplicationUser GetUserById(string id)
         {
             return _context.Users.FirstOrDefault(a => a.Id == id);

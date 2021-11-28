@@ -1,5 +1,4 @@
 ﻿using hackathon_campus.Core.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace hackathon_campus.Core.ViewModels
@@ -12,8 +11,6 @@ namespace hackathon_campus.Core.ViewModels
         public string LastName { get; set; }
         public string NickName { get; set; }
         public string AvatarPath { get; set; }
-        public string SelectedRole { get; set; }
         public ICollection<Event> Events { get; set; }
-        public ICollection<String> UserRoles { get; set; }
     }
 }

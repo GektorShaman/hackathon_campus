@@ -98,7 +98,7 @@ namespace hackathon_campus.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             if (User?.Identity?.IsAuthenticated == true)
@@ -107,7 +107,7 @@ namespace hackathon_campus.Web.Controllers
                 return RedirectToAction("Index", "Home"); ;
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Main");
 
         }
     }

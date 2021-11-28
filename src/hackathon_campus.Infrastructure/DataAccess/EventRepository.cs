@@ -21,7 +21,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         public void AddParticipant(Guid id)
         {
             var @event = GetSinglEvent(id);
-            @event.NumberParticipants += 1;
+            @event.NumberParticipants = @event.NumberParticipants + 1;
             _context.Update(@event);
             _context.SaveChanges();
         }
@@ -82,7 +82,7 @@ namespace hackathon_campus.Infrastructure.DataAccess
         public void RemoveParticipant(Guid id)
         {
             var @event = GetSinglEvent(id);
-            @event.NumberParticipants -= 1;
+            @event.NumberParticipants = @event.NumberParticipants - 1;
             _context.Update(@event);
             _context.SaveChanges();
         }

@@ -10,19 +10,14 @@
 @foreach (var category in Model)
 {
 <div class="card mb-2">
-    <div class="card-body">
+    <div class="card-body cotegoryel">
         <a href="@Url.Action("Details", "Category", new { categoryId = category.Id, page = 1 })">
             <h5 class="card-title">@category.Name</h5>
         </a>
         <p class="card-text">@category.Description</p>
-        <p>@category.NumberParticipants</p>
+        <p>Участников : @category.NumberParticipants</p>
     </div>
 
-</div>
-<div class="cotegoryel">
-            <a class="cotname"href="#">Name</a>
-            <p class="opis">Opiafasfasfafasfa asf  assa</p>
-            <label>1234</label>
 </div> 
 
 }

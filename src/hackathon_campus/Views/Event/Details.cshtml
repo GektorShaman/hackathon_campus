@@ -4,34 +4,40 @@
 }
 @model EventDetailsViewModel
 
-<h1>@Model.Title</h1>
-<div class="dropdown">
-    <div class="dropdown-content">
-        <img src="/@Model.ImagePath" alt="Picture" style="max-width: 40vw;">
-    </div>
-</div>
-<p>@Model.Description</p>
-<p>@Model.Organizer</p>
-<p>@Model.EventDateStart</p>
+<form style="margin-bottom: 90px;" class="container">
 
-@if (!Model.isOwn)
-{
-    @if (!Model.IsSubscribe)
-    {
-        <a href="@Url.Action("SubscribeOnEvent", "Event", new { eventId = @Model.Id })">
-            Зарегистрироваться
-        </a>
-    }
-    else
-    {
-        <a href="@Url.Action("UnSubscribeOnEvent", "Event", new { eventId = @Model.Id })">
-            Вы зарегистрированы
-        </a>
-    }
-}
-else
-{
-    <p> Ваше мероприятие. Количество участников:</p>
-    <p> @Model.NumberParticipants</p>
-}
+    <div class="namelabel">
+        <p style="text-align: center;" class="nameMer">@Model.Title</p>
+        <div style="font-size:30px">Описание мероприятия:</div>
+        <div class="nameMer" style="height:290px;">@Model.Description</div>
+    </div>
+    <div class="rightpan">
+        <div class="addImg">
+            <img style="width:490px;height:350px;" src="/@Model.ImagePath" alt="" class="merimg">
+        </div>
+        <div type="text" placeholder="Место проведения мероприятия" class="date">Место проведения мероприятия: @Model.MeetingPoint</div>
+        <div type="text" placeholder="Время проведения мероприятия" class="date">Время проведения мероприятия: @Model.EventDateStart</div>
+        @if (!Model.isOwn)
+        {
+            @if (!Model.IsSubscribe)
+            {
+                <a class="date" href="@Url.Action("SubscribeOnEvent", "Event", new { eventId = @Model.Id })"
+                   style="background-color:#2185FB; color:white; ">Подать заявку</a>
+            }
+            else
+            {
+                <a class="date" href="@Url.Action("UnSubscribeOnEvent", "Event", new { eventId = @Model.Id })"
+                   style="background-color:#2185FB; color:white; ">Отменить заявку</a>
+            }
+        }
+        else
+        {
+            <a class="date" style="background-color:#2185FB; color:white; ">Ваше мероприятие</a>
+            <p> Количество участников:@Model.NumberParticipants</p>
+        }
+
+
+    </div>
+
+</form>
 
